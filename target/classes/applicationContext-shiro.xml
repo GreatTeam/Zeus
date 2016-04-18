@@ -14,10 +14,11 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
-                /resource/css/* =anon
+                /resources/** = anon
                 <!-- 登录页允许访问 -->
-                /index = anon
                 /login = anon
+                / = anon
+                /user/login = anon
                 <!-- 其他资源需要认证 -->
                 /** = authc
             </value>

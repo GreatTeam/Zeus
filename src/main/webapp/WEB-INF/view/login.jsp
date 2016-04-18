@@ -11,24 +11,23 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>Signin Template for Bootstrap</title>
-
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../../resource/css/signin.css" rel="stylesheet">
-
+    <link href="http://localhost:8080/zeus/resources/css/signin.css" rel="stylesheet" type="text/css"/>
+		 
   </head>
 
   <body>
 
     <div class="container">
 
-      <form class="form-signin">
-        <label for="inputEmail" class="sr-only">用户名${basePath}</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <form class="form-signin" action="user/login">
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="用户名" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me

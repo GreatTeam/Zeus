@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zeus.web.dao.UsersDao">  
+  <select id="authentication" resultType="com.zeus.web.model.Users" parameterType="com.zeus.web.model.Users">
+        select * from sys_users
+        where username = #{user.username,jdbcType=VARCHAR} and password = #{user.password,jdbcType=VARCHAR}
+  </select>
+</mapper>
