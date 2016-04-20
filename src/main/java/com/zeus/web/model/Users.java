@@ -11,6 +11,13 @@ public class Users {
 	private int locked;
 	private String MD5;
 	private Date createtime;
+	public Users(){
+		
+	}
+	public Users(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 	public int getId() {
 		return id;
 	}

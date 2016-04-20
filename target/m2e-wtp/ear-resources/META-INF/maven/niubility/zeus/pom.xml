@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>niubility</groupId>
   <artifactId>zeus</artifactId>
-  <packaging>war</packaging>
+  <packaging>ear</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>zeus Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -239,7 +239,24 @@
             <artifactId>shiro-quartz</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-        
+        <!-- jcaptcha -->
+        <dependency>  
+		    <groupId>com.octo.captcha</groupId>  
+		    <artifactId>jcaptcha</artifactId>  
+		    <version>2.0-alpha-1</version>  
+		</dependency>  
+		<dependency>  
+		    <groupId>com.octo.captcha</groupId>  
+		    <artifactId>jcaptcha-integration-simple-servlet</artifactId>  
+		    <version>2.0-alpha-1</version>  
+		    <exclusions>  
+		        <exclusion>  
+		            <artifactId>servlet-api</artifactId>  
+		            <groupId>javax.servlet</groupId>  
+		        </exclusion>  
+		    </exclusions>  
+		</dependency>
+		
   </dependencies>
   <build>
    	<plugins>

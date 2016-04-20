@@ -17,6 +17,9 @@
                 /resources/** = anon
                 <!-- 登录页允许访问 -->
                 /login = anon
+                /register = anon
+                /user/saveRegister = anon
+                /user/ajaxName = anon
                 / = anon
                 /user/login = anon
                 <!-- 其他资源需要认证 -->

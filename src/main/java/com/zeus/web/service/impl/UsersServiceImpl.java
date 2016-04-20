@@ -17,5 +17,12 @@ public class UsersServiceImpl implements UsersService{
 	public Users authentication(Users user) {
 		return usersdao.authentication(user);
 	}
-
+	@Override
+	public void saveUser(Users user) {
+		usersdao.saveUser(user);
+	}
+	@Override
+	public Users findUserByUsername(String username) {
+		return usersdao.findUserByUsername(username);
+	}
 }

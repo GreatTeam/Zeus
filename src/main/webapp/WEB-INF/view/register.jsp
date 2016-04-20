@@ -22,27 +22,36 @@
 
     <div class="container">
 
-      <form class="form-signin" action="user/login">
-        <label for="inputUsername" class="sr-only">用户名</label>
-        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="用户名" required autofocus>
-        <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> 记住我
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-        <button class="btn btn-lg btn-primary btn-block" id="register" type="button">注册</button>
+      <form class="form-signin" action="user/saveRegister">
+        <label for="inputUsername" class="sr-only"></label>
+        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入用户名">
+        <label for="inputPassword" class="sr-only"></label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" >
+        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
 
     </div> <!-- /container -->
 
   </body>
   <script type="text/javascript">
-  	$("#register").click(function(){
-  		window.location.href="http://localhost:8080/zeus/register";
+  	$("#inputUsername").blur(function(){
+  		var ajusername=$("#inputUsername").val();
+		$.ajax({  
+			url:'user/ajaxName',// 跳转到 action  
+			data:{  
+				username : ajusername,  
+			},  
+			type:'post',  
+			cache:false,  
+			dataType:'json',  
+			success:function(data) {  
+			    if(data==1){
+			    	alert(1);
+			    }else if(data==2){
+			    	alert(2);
+			    }
+			} 
+	 	});
   	});
-  	
   </script>
 </html>
