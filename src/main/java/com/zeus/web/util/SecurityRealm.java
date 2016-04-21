@@ -3,6 +3,7 @@ package com.zeus.web.util;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -28,16 +29,17 @@ public class SecurityRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken token) throws AuthenticationException {
 		String username = (String)token.getPrincipal();  //得到用户名  
-        String password = new String((char[])token.getCredentials()); //得到密码  
-        Users tokenuser=new Users(username,password);
+        String password = new String((char[])token.getCredentials()); //得到密码
+        Users tokenuser=new Users();
+        tokenuser.setUsername(username);
+        tokenuser.setMD5(PasswordMD5.getMd5(username, password));
         Users result=usersservice.authentication(tokenuser);
-        if(result!=null){
-        	System.out.println("2");
-        }else{
-        	System.out.println("3");
+        if(result==null){
+        	throw new IncorrectCredentialsException(); 
         }
         //如果身份认证验证成功，返回一个AuthenticationInfo实现；  
         return new SimpleAuthenticationInfo(username, password, getName());  
+        
     }  
 	
 }

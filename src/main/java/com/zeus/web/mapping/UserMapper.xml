@@ -5,7 +5,7 @@
 <mapper namespace="com.zeus.web.dao.UsersDao">  
   <select id="authentication" resultType="com.zeus.web.model.Users" parameterType="map">
         select * from sys_users
-        where username = #{user.username,jdbcType=VARCHAR} and password = #{user.password,jdbcType=VARCHAR}
+        where username = #{user.username,jdbcType=VARCHAR} and password = #{user.MD5,jdbcType=VARCHAR}
   </select>
   <insert id="saveUser" parameterType="map">
   		insert into sys_users (username,password,salt,MD5,createtime) values 
