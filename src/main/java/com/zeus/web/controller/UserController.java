@@ -43,7 +43,7 @@ public class UserController {
 		}catch(IncorrectCredentialsException e){
 			System.out.println("密码错误");
 		}
-		return "main";  
+		return "main";
 	}
 	@RequestMapping(value="/saveRegister", method = RequestMethod.POST)
 	public String saveregister(String username,String password,Model model, HttpServletRequest request){
