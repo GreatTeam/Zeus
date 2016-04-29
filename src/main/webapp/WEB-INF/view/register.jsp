@@ -1,3 +1,4 @@
+<%@ page     contentType="text/html;charset=utf-8" %> 
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -15,43 +16,56 @@
 
     <!-- Custom styles for this template -->
     <link href="http://localhost:8080/zeus/resources/css/signin.css" rel="stylesheet" type="text/css"/>
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://localhost:8080/zeus/resources/css/jquery-1.11.1.js" type="text/javascript"></script>
+  	<script src="http://localhost:8080/zeus/resources/js/validate.js" type="text/javascript"></script>
+  	<!--<script src="http://localhost:8080/zeus/resources/js/messages_zh.js" type="text/javascript"></script>-->
   </head>
 
   <body>
 
     <div class="container">
 
-      <form class="form-signin" action="user/saveRegister">
+      <form class="form-signin" action="/zeus/user/saveRegister" method="post">
         <label for="inputUsername" class="sr-only"></label>
         <input type="text" id="inputUsername" name="username" class="form-control" placeholder="请输入用户名">
         <label for="inputPassword" class="sr-only"></label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" >
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码">
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
 
     </div> <!-- /container -->
-
+	
   </body>
+
   <script type="text/javascript">
-  	$("#inputUsername").blur(function(){
-  		var ajusername=$("#inputUsername").val();
-		$.ajax({  
-			url:'user/ajaxName',// 跳转到 action  
-			data:{  
-				username : ajusername,  
-			},  
-			type:'post',  
-			cache:false,  
-			dataType:'json',  
-			success:function(data) {  
-			    if(data==1){
-			    	alert(1);
-			    }else if(data==2){
-			    	alert(2);
-			    }
-			} 
-	 	});
+  	$(function(){
+  		$(".form-signin").validate({
+  			rules:{
+  				username:{
+  					required:true,
+  					rangelength:[6,20],
+  					remote:{                                          //验证用户名是否存在
+  	  	               type:"POST",
+  	  	               url:"user/ajaxName",             //servlet
+  	  	              }
+  				}, 
+  				password: {
+  					required:true,
+  					minlength:6
+  				}
+  			}, 
+  			messages: {						
+  		  	     username:{
+  		  	    	 required:"用户名不能为空！",
+  		  	    	 rangelength:"用户名位数必须在6到20字符之间！",
+  		  	    	 remote:"用户名已经被注册"
+  		  	    	 },
+  		  	     password: {
+  		  	    	 required:"密码不能为空！",
+  		  	    	 minlength:"密码位数必须大于等于6个字符！"
+  		  	    	 }
+  		  	    }	
+  		});
   	});
   </script>
 </html>

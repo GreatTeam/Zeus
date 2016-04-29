@@ -10,10 +10,4 @@ public class ex extends Exception {
 	public ex(String msg) {
 		super(msg);
 	}
-	public ex(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-	public ex(Throwable cause) {
-		super(cause);
-	}
 }

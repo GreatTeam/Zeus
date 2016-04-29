@@ -5,7 +5,7 @@
 <mapper namespace="com.zeus.web.dao.UsersDao">  
   <select id="authentication" resultType="com.zeus.web.model.Users" parameterType="map">
         select * from sys_users
-        where username = #{user.username,jdbcType=VARCHAR} and password = #{user.MD5,jdbcType=VARCHAR}
+        where username = #{user.username,jdbcType=VARCHAR} and MD5 = #{user.MD5,jdbcType=VARCHAR}
   </select>
   <insert id="saveUser" parameterType="map">
   		insert into sys_users (username,password,salt,MD5,createtime) values 
@@ -15,5 +15,13 @@
   <select id="findUserByUsername" resultType="com.zeus.web.model.Users" parameterType="string">
         select * from sys_users
         where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="findRoles" resultType="com.zeus.web.model.Role" parameterType="string">
+        select * from sys_roles where id = (select role_id from sys_users_roles where user_id = (select id from sys_users
+        where username = #{username,jdbcType=VARCHAR}))
+  </select>
+  <select id="findpermission" resultType="com.zeus.web.model.Permission" parameterType="int">
+		select * from sys_permissions where sys_permissions.id = 
+		(select permission_id from sys_roles_permissions where sys_roles_permissions.role_id = 1)
   </select>
 </mapper>

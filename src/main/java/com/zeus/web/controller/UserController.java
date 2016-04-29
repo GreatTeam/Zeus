@@ -12,12 +12,17 @@ import java.util.Date;
 
 
 
+
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,16 +39,38 @@ import com.zeus.web.util.PasswordMD5;
 public class UserController {
 	@Autowired
 	private UsersService usersservice;
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String userLogin(String username,String password,Model model, HttpServletRequest request){
+	@RequestMapping(value="/main")
+	public String userMain(Model model, HttpServletRequest request){
+		return "main";
+	}
+	@RequestMapping(value="/login")
+	public String userLogin(String username,String password,String verification,String hiddenVerification,Model model, HttpServletRequest request){
 		Subject subject = SecurityUtils.getSubject();
+		// 已登陆则 跳到首页
+        if (subject.isAuthenticated()) {
+            return "redirect:/user/main";
+        }
+		if(username==null||password==null){
+			return "redirect:/login";
+		}
+		//验证码
+		if(verification!=null&hiddenVerification!=null){
+			Session session=subject.getSession(); 
+			String value=(String) session.getAttribute(hiddenVerification);
+			if(verification.toLowerCase().equals(value.toLowerCase())){
+				System.out.println("true");
+			}else{
+				System.out.println(value+"-----"+verification);
+				return "redirect:/login";
+			}
+		}
 		UsernamePasswordToken token= new UsernamePasswordToken(username,password);
 		try{
-		subject.login(token);
+			subject.login(token);
 		}catch(IncorrectCredentialsException e){
 			System.out.println("密码错误");
 		}
-		return "main";
+		return "redirect:/user/main";
 	}
 	@RequestMapping(value="/saveRegister", method = RequestMethod.POST)
 	public String saveregister(String username,String password,Model model, HttpServletRequest request){
@@ -66,11 +93,11 @@ public class UserController {
 		Users users=usersservice.findUserByUsername(username);
 		String sign;
 		if(users!=null){
-			//未注册返回1
-			sign="1";
+			//已注册返回
+			sign="false";
 		}else{
-			//已注册返回2
-			sign="2";
+			//未注册
+			sign="true";
 		}
 		try {
 			PrintWriter writer=response.getWriter();
@@ -81,4 +108,11 @@ public class UserController {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/logout")
+    public String logout(HttpSession session) {
+        // 登出操作
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "login";
+    }
 }
